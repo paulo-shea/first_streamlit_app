@@ -1,6 +1,4 @@
 #requirements.txt
-streamlit==22.0.3
-
 snowflake-connector-python
 
-import snowflake.connector
+
