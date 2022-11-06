@@ -46,7 +46,7 @@ def insert_row_snowflake(new_fruit):
        return "Thanks for adding " + new_fruit 
                               
 #new section to display api reponse
-streamlit.header('Fruityvice Fruit Advice!')
+streamlit.header('View Our Fruit List - Add Your Favorites')
 try:
   fruit_choice = streamlit.text_input('What fruit would you like information about?')
   if not fruit_choice:
@@ -62,6 +62,7 @@ except URLError as e:
 if streamlit.button('Get Fruit load List'):
    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
    my_data_rows = get_fruit_load_list()
+   my_cnx.close()
    streamlit.dataframe(my_data_rows)
  
 add_my_fruit = streamlit.text_input('What fruit would you like to add?')
