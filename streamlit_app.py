@@ -33,6 +33,12 @@ def get_fruityvice_data(this_fruit_choice):
   fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
   return fruityvice_normalized
 
+#Function to get fruit list from snowflake
+def get_fruit_load_list():
+  with my_cnx.cursor() as my_cur:
+       my_cur.execute("SELECT * from fruit_load_list")
+      return my_cur.fetchall()
+
 #new section to display api reponse
 streamlit.header('Fruityvice Fruit Advice!')
 try:
@@ -46,7 +52,12 @@ try:
 except URLError as e:
     streamlit.error()
 
-
+# add a button to load fruit
+if streamlit.button('Get Fruit load List'):
+   my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+   my_data_rows = get_fruit_load_list()
+  streamlit.dataframe(my_data_rows)
+  
 #debugging
 streamlit.stop
 
